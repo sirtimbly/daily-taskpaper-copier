@@ -5,9 +5,9 @@
 		"node": ">=18"
 	},
 	"scripts": {
-		"run": "pnpm run build && node lib/daily.mjs",
+		"start": "pnpm run build && node lib/daily.mjs",
 		"build": "esbuild src/daily.ts --outfile=lib/daily.mjs --sourcemap",
-		"check": "rome check src/",
+		"check": "tsc --noEmit && rome check src/",
 		"format": "rome format src/ --write"
 	},
 	"dependencies": {
@@ -16,6 +16,7 @@
 	"devDependencies": {
 		"@types/node": "18.11.9",
 		"esbuild": "^0.15.14",
-		"rome": "^10.0.1"
+		"rome": "^10.0.1",
+		"typescript": "^4.9.3"
 	}
 }

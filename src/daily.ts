@@ -10,7 +10,7 @@ const fileExtension = ".taskpaper";
 function fmtDate(d: Date) {
 	return format(d, "yyyy-MM-dd");
 }
-const doneRegex = /^.+(✔).+$/gmu;
+const doneRegex = /^.+(✔|- \[x\]).+\n/gmu;
 
 /**
  * Copies contents from given file, cleans the text, and writes to file with

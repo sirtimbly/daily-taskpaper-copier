@@ -5,6 +5,7 @@ specifiers:
   date-fns: ^2.29.3
   esbuild: ^0.15.14
   rome: ^10.0.1
+  typescript: ^4.9.3
 
 dependencies:
   date-fns: registry.npmjs.org/date-fns/2.29.3
@@ -13,6 +14,7 @@ devDependencies:
   '@types/node': registry.npmjs.org/@types/node/18.11.9
   esbuild: registry.npmjs.org/esbuild/0.15.14
   rome: registry.npmjs.org/rome/10.0.1
+  typescript: registry.npmjs.org/typescript/4.9.3
 
 packages:
 
@@ -377,4 +379,12 @@ packages:
       '@rometools/cli-linux-x64': registry.npmjs.org/@rometools/cli-linux-x64/10.0.1
       '@rometools/cli-win32-arm64': registry.npmjs.org/@rometools/cli-win32-arm64/10.0.1
       '@rometools/cli-win32-x64': registry.npmjs.org/@rometools/cli-win32-x64/10.0.1
+    dev: true
+
+  registry.npmjs.org/typescript/4.9.3:
+    resolution: {integrity: sha512-CIfGzTelbKNEnLpLdGFgdyKhG23CKdKgQPOBc+OUNrkJ2vr+KSzsSV5kq5iWhEQbok+quxgGzrAtGWCyU7tHnA==, registry: https://gitlab.internal.granular.ag/api/v4/packages/npm/, tarball: https://registry.npmjs.org/typescript/-/typescript-4.9.3.tgz}
+    name: typescript
+    version: 4.9.3
+    engines: {node: '>=4.2.0'}
+    hasBin: true
     dev: true
