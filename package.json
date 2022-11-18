@@ -1,0 +1,21 @@
+{
+	"name": "daily-taskpaper-copier",
+	"license": "ISC",
+	"engines": {
+		"node": ">=18"
+	},
+	"scripts": {
+		"run": "pnpm run build && node lib/daily.mjs",
+		"build": "esbuild src/daily.ts --outfile=lib/daily.mjs --sourcemap",
+		"check": "rome check src/",
+		"format": "rome format src/ --write"
+	},
+	"dependencies": {
+		"date-fns": "^2.29.3"
+	},
+	"devDependencies": {
+		"@types/node": "18.11.9",
+		"esbuild": "^0.15.14",
+		"rome": "^10.0.1"
+	}
+}
