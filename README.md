@@ -1,6 +1,6 @@
 # What Is It?
 
-The `lib/daily.js` node script will copy the contents of the most recent `YYYY-MM-DD.taskpaper` file (from the parent directory by default) into a new file with today's date. 
+The included `lib/daily.mjs` node script will copy the contents of the most recent `YYYY-MM-DD.taskpaper` file (from the parent directory by default) into a new file with today's date. 
 
 Here's my template taskpaper file.
 
@@ -10,8 +10,6 @@ Errands:
 Today's Goal:
 
 #######################################
-FOCUS:
-
 FOCUS:
 
   Team:
@@ -36,6 +34,8 @@ INBOXES:
 #######################################
 ```
 
+I based my template [on this tweet](https://twitter.com/NotePlanApp/status/1589700199429320704).
+
 I use SublimeText with the package [PlainTasks](https://github.com/aziz/PlainTasks) to manage my todo lists. 
 
 In VSCode you can use the extension [Todo+](https://marketplace.visualstudio.com/items?itemName=fabiospampinato.vscode-todo-plus) to accomplish most of the same things.
@@ -54,6 +54,12 @@ npm run build
 npm start
 ```
 
+or 
+
+```sh
+node lib/daily.mjs
+```
+
 
 ## Dependencies
 
@@ -61,4 +67,8 @@ npm start
 |-------------|----------|
 | nodejs.org  | ^18.12.1 |
 
+Note: You can use [tea](https://github.com/teaxyz/cli) to easily run this with the correct version of node installed in it's env.
+```sh
+$ sh <(curl tea.xyz) .
+```
 
