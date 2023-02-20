@@ -11,6 +11,7 @@
 		"format": "rome format src/ --write"
 	},
 	"dependencies": {
+		"@root/walk": "^1.1.0",
 		"date-fns": "^2.29.3"
 	},
 	"devDependencies": {

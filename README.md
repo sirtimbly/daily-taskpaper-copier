@@ -1,5 +1,7 @@
 # What Is It?
 
+Plain-Text productivity. Create a new todo list file each day based on what was left in yesterday's file.
+
 The included `lib/daily.mjs` node script will copy the contents of the most recent `YYYY-MM-DD.taskpaper` file (from the parent directory by default) into a new file with today's date. 
 
 Here's my template taskpaper file.
@@ -35,6 +37,8 @@ INBOXES:
 ```
 
 I based my template [on this tweet](https://twitter.com/NotePlanApp/status/1589700199429320704).
+
+When the text is copied from the previous file, we remove any "done" tasks (where the  line starts with ✔ or `- [x]`). Also we trim off the contents of the `# JOURNAL` section so it's fresh each day.
 
 I use SublimeText with the package [PlainTasks](https://github.com/aziz/PlainTasks) to manage my todo lists. 
 

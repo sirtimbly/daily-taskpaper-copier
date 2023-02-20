@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@root/walk': ^1.1.0
   '@types/node': 18.11.9
   date-fns: ^2.29.3
   esbuild: ^0.15.14
@@ -8,6 +9,7 @@ specifiers:
   typescript: ^4.9.3
 
 dependencies:
+  '@root/walk': registry.npmjs.org/@root/walk/1.1.0
   date-fns: registry.npmjs.org/date-fns/2.29.3
 
 devDependencies:
@@ -99,6 +101,12 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  registry.npmjs.org/@root/walk/1.1.0:
+    resolution: {integrity: sha512-FfXPAta9u2dBuaXhPRawBcijNC9rmKVApmbi6lIZyg36VR/7L02ytxoY5K/14PJlHqiBUoYII73cTlekdKTUOw==, registry: https://gitlab.internal.granular.ag/api/v4/packages/npm/, tarball: https://registry.npmjs.org/@root/walk/-/walk-1.1.0.tgz}
+    name: '@root/walk'
+    version: 1.1.0
+    dev: false
 
   registry.npmjs.org/@types/node/18.11.9:
     resolution: {integrity: sha512-CRpX21/kGdzjOpFsZSkcrXMGIBWMGNIHXXBVFSH+ggkftxg+XYP20TESbh+zFvFj3EQOl5byk0HTRn1IL6hbqg==, registry: https://gitlab.internal.granular.ag/api/v4/packages/npm/, tarball: https://registry.npmjs.org/@types/node/-/node-18.11.9.tgz}
