@@ -5,7 +5,7 @@
 		"node": ">=18"
 	},
 	"scripts": {
-		"start": "pnpm run build && node lib/daily.mjs",
+		"start": "pnpm run build && node lib/daily.mjs -o -a",
 		"build": "esbuild src/daily.ts --outfile=lib/daily.mjs --sourcemap",
 		"check": "tsc --noEmit && rome check src/",
 		"format": "rome format src/ --write"

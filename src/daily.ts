@@ -1,23 +1,30 @@
 #!/usr/bin/env /usr/local/bin/node
 
-import { FileHandle, open, writeFile } from "node:fs/promises";
+import { FileHandle, open, writeFile, readdir, rename} from "node:fs/promises";
 import { parseArgs, ParseArgsConfig } from "node:util";
 import path from "path";
-import { format, subDays, differenceInDays } from "date-fns";
+import { format, subDays, differenceInDays, parse } from "date-fns";
 
 const __filename = process.cwd();
 const now = new Date();
 
 const doneRegex = /^.+(✔|- \[x\]).+\n/gmu;
 
+const dateRegex = /\d{2,4}-\d{2}-\d{2}/;
+
+const fmtString = "yyyy-MM-dd";
 function fmtDate(d: Date) {
-  return format(d, "yyyy-MM-dd");
+  return format(d, fmtString);
+}
+
+function parseDate(s: string) {
+  return parse(s, fmtString, new Date())
 }
 const helpDocs = `
 Copies todo items from previous daily file to today's new file.
 
 Usage: daily [options]
-
+  -a --archive    Archive files from previous weeks into '[dir]/Archive' dir
 	-d --dir				Directory for your daily files (default is '../').
 	-o --overwrite  Should it overwrite the today file if it already exists?
 	-e --ext				File extension (default is '.taskpaper').
@@ -48,6 +55,11 @@ const args: ParseArgsConfig = {
       short: "n",
       default: "100",
     },
+    archive: {
+      type: "boolean",
+      short: "a",
+      default: false,
+    },
     help: {
       type: "boolean",
       short: "h",
@@ -56,14 +68,15 @@ const args: ParseArgsConfig = {
   },
 };
 const {
-  values: { dir, overwrite, extension, help, days },
+  values: { archive, dir, overwrite, extension, help, days },
 } = parseArgs(args);
 let n = 100;
 if (typeof days === "string") {
   n = Number.parseInt(days);
 }
-const directory = dir || "../";
-const fileExtension = extension || ".taskpaper";
+const directory = typeof dir === "string" ? dir : "../";
+const archiveDir = path.resolve(`${directory}/Archive`)
+const fileExtension = typeof extension === "string" ? extension : ".taskpaper";
 
 /**
  * Copies contents from given file, cleans the text, and writes to file with
@@ -99,7 +112,17 @@ async function copyToNewFile(file: FileHandle): Promise<any> {
     }
   }
   console.log("Writing new file:", todayFile);
-  return writeFile(todayFile, newContents);
+  await writeFile(todayFile, newContents);
+  if (archive) {
+    const oldDate = subDays(new Date(), 7);
+    console.log("Looking for files to archive older than ", oldDate);
+    const archivable = await getArchivableFiles(oldDate);
+    if (archivable && archivable.length) {
+      await archiveFiles(archivable)
+      console.log("Moving old files to ./Archive complete.")
+    }
+
+  }
 }
 
 /**
@@ -144,6 +167,39 @@ async function openLastFile() {
 
   return getPreviousPath(now);
 }
+
+async function archiveFiles(fileNames: string[]) {
+  return Promise.all(
+    fileNames.map((name) => {
+      console.log("moving...", name)
+      return rename(path.resolve(directory, name), path.resolve(archiveDir, name))
+    })
+  )
+}
+
+async function getArchivableFiles(olderThan: Date): Promise<string[] | undefined> {
+  function isOld(fileDate: Date) {
+    return fileDate < olderThan;
+  }
+  const allFiles = await readdir(path.resolve(directory));
+  const taskFiles = allFiles.filter((name: string) => path.extname(name) === fileExtension)
+  const oldFiles = taskFiles.filter((name: string) => {
+    const file = path.basename(name, fileExtension);
+    // console.log("old file", file);
+    if (dateRegex.test(file)) {
+      // console.log("regex matched");
+      const fileDate = parseDate(file);
+      // console.log('parsedate result', fileDate);
+      return typeof fileDate === "object" && isOld(fileDate);
+    } else {
+      // console.log("regex not matched!", file);
+      return false;
+    }
+  })
+  console.log("Found files to archive:", oldFiles.length);
+  return oldFiles;
+}
+
 if (help) {
   console.log(helpDocs);
 } else {
